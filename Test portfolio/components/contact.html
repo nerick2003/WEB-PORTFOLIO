@@ -1,0 +1,41 @@
+<!-- Contact Section -->
+<section id="contact" class="contact">
+    <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="section-subtitle">
+            I'm open to internships, collaborative projects, and opportunities to learn and grow. 
+            Feel free to reach out!
+        </p>
+        
+        <div class="contact-content">
+            <div class="contact-info" id="contactInfoContainer">
+                <!-- Contact info will be dynamically loaded from config/data.js -->
+            </div>
+
+            <form class="contact-form" id="contactForm">
+                <div class="form-message" id="formMessage"></div>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" placeholder="What's this about?" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Tell me about your project or opportunity..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-send-message">
+                    <span class="btn-text">Send Message</span>
+                    <span class="btn-icon">→</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
