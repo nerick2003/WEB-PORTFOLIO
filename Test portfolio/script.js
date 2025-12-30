@@ -444,7 +444,10 @@ function initProjectModal() {
         const yearText = year ? `<div class="modal-meta"><span>📅 ${year}</span></div>` : '';
         
         modalBody.innerHTML = `
-            <div class="modal-image">${imageContent}</div>
+            <div class="modal-image">
+                ${imageContent}
+                ${featuresList}
+            </div>
             <div class="modal-info">
                 <div class="modal-header">
                     <h2>${project.title}</h2>
@@ -455,15 +458,14 @@ function initProjectModal() {
                     </div>
                 </div>
                 <p class="modal-description">${project.description}</p>
-                ${featuresList}
                 <div class="modal-tech">
                     <h4>Technologies</h4>
                     <div class="modal-tech-tags">
                         ${project.technologies.map(tech => `<span class="modal-tech-tag">${tech}</span>`).join('')}
                     </div>
                 </div>
-                ${actionButtons ? `<div class="modal-actions">${actionButtons}</div>` : ''}
             </div>
+            ${actionButtons ? `<div class="modal-actions-bottom">${actionButtons}</div>` : ''}
         `;
         
         modal.classList.add('active');
