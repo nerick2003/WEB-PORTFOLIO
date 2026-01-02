@@ -1,8 +1,4 @@
-// Portfolio Data Configuration
-// Edit this file to easily update your portfolio content
-
 const portfolioData = {
-    // Personal Information
     personalInfo: {
         name: "Nerick Edward J. Macapayag",
         title: "BSIT 2nd Year Student | Web Developer | Software Development & Database Enthusiast",
@@ -10,10 +6,9 @@ const portfolioData = {
         university: "University of Science and Technology of Southern Philippines",
         year: "2nd Year",
         location: "Villanueva, Misamis Oriental, Mindanao, Philippines",
-        profileImage: "images/pfp.png" // Path to your profile picture
+        profileImage: "images/pfp.png"
     },
 
-    // Skills Configuration
     skills: [
         {
             category: "Programming Languages",
@@ -42,34 +37,24 @@ const portfolioData = {
         }
     ],
 
-    // Projects Configuration
-    // Showcase your projects without showing code by using:
-    // - screenshot: Path to project screenshot/demo image (e.g., "images/projects/project1.png")
-    // - liveDemo: URL to live demo (e.g., "https://yourproject.com")
-    // - videoDemo: URL to video walkthrough (YouTube, Vimeo, etc.)
-    // - caseStudy: URL to detailed case study or blog post
-    // - features: Array of key features to highlight
-    // - githubLink: Optional GitHub link (can be hidden if you don't want to show code)
     projects: [
         {
             icon: "📱",
-            title: "Student Management System",
-            description: "A web-based application for managing student records, grades, and attendance. Built using HTML, CSS, JavaScript, and MySQL. Features include user authentication, data validation, and report generation.",
-            technologies: ["HTML", "CSS", "JavaScript", "MySQL"],
-            // Modern showcase features (NEW):
-            featured: true, // Mark as featured project
-            status: "completed", // Options: "completed", "in-progress", "maintained", "planned"
-            year: "2024", // Project completion year
-            category: "Full-Stack", // Optional: helps with organization
-            // Showcase options (all optional):
-            screenshot: "", // e.g., "images/projects/student-management.png"
-            liveDemo: "", // e.g., "https://student-management-demo.netlify.app"
-            videoDemo: "", // e.g., "https://youtube.com/watch?v=..."
-            caseStudy: "", // e.g., "https://yourblog.com/case-study"
-            features: ["User Authentication", "Data Validation", "Report Generation", "Responsive Design"],
-            githubLink: "#", // Optional: set to "" to hide GitHub link
-            link: "#",
-            linkText: "View Demo"
+            title: "HabitMate - Habit & Routine Tracker",
+            description: "A beautiful and intuitive habit & routine tracker app built with Flutter for Android and iOS. Features habit creation with custom icons and colors, daily checklist tracking, streak monitoring, progress analytics with charts, smart reminders, and local data storage. Built with Material 3 design principles for a modern, clean user experience. Currently working on this project.",
+            technologies: ["Flutter", "Dart", "SQLite", "Local Notifications", "Charts"],
+            featured: true,
+            status: "in-progress",
+            year: "2025",
+            category: "Mobile Application",
+            screenshot: "",
+            liveDemo: "",
+            videoDemo: "",
+            caseStudy: "",
+            features: ["Habit Creation & Customization", "Daily Checklist Tracking", "Streak Tracking", "Progress Analytics & Charts", "Smart Reminders", "Local Storage", "Material 3 UI"],
+            githubLink: "https://github.com/nerick2003/HabitMate",
+            link: "https://github.com/nerick2003/HabitMate",
+            linkText: "View Repository"
         },
         {
             icon: "🛒",
@@ -78,7 +63,7 @@ const portfolioData = {
             technologies: ["HTML", "CSS"],
             featured: true,
             status: "completed",
-            year: "2024",
+            year: "2025",
             category: "Full-Stack",
             screenshot: "",
             liveDemo: "",
@@ -110,14 +95,14 @@ const portfolioData = {
             technologies: ["HTML", "CSS", "JavaScript"],
             featured: true,
             status: "completed",
-            year: "2024",
+            year: "2025",
             category: "Frontend",
             screenshot: "",
-            liveDemo: "", // Current portfolio URL (can be updated if deployed)
+            liveDemo: "",
             videoDemo: "",
             caseStudy: "",
             features: ["Responsive Design", "Smooth Animations", "Interactive Elements", "Modern UI/UX", "Dynamic Content Loading", "Project Showcase"],
-            githubLink: "#", // Can be updated if you have a GitHub repo for this portfolio
+            githubLink: "#",
             link: "#",
             linkText: "View Live"
         },
@@ -128,7 +113,7 @@ const portfolioData = {
             technologies: ["Python", "Tkinter", "SQLite", "Pillow", "OpenCV"],
             featured: true,
             status: "completed",
-            year: "2024",
+            year: "2025",
             category: "Desktop Application",
             screenshot: "",
             liveDemo: "",
@@ -146,7 +131,7 @@ const portfolioData = {
             technologies: ["Python", "Database", "GUI"],
             featured: true,
             status: "completed",
-            year: "2024",
+            year: "2025",
             category: "Desktop Application",
             screenshot: "",
             liveDemo: "",
@@ -159,7 +144,6 @@ const portfolioData = {
         }
     ],
 
-    // Achievements Configuration
     achievements: [
         {
             icon: "🏆",
@@ -199,7 +183,33 @@ const portfolioData = {
         }
     ],
 
-    // Contact Information
+    statistics: [
+        {
+            icon: "📁",
+            label: "Projects Completed",
+            value: 6,
+            suffix: "+"
+        },
+        {
+            icon: "💻",
+            label: "Technologies Mastered",
+            value: 20,
+            suffix: "+"
+        },
+        {
+            icon: "🏆",
+            label: "Achievements",
+            value: 6,
+            suffix: "+"
+        },
+        {
+            icon: "📚",
+            label: "Years of Learning",
+            value: 2,
+            suffix: "+"
+        }
+    ],
+
     contact: {
         email: "macapayag.nerick6@gmail.com",
         linkedin: "linkedin.com/in/yourprofile",
@@ -208,4 +218,3 @@ const portfolioData = {
         location: "Villanueva, Misamis Oriental, Mindanao, Philippines"
     }
 };
-
