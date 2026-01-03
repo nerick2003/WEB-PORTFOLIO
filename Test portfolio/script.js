@@ -250,6 +250,11 @@ function initProjectFilters() {
     let currentSearch = '';
     let currentSort = 'newest';
     
+    // Set initial sort value in dropdown
+    if (sortSelect) {
+        sortSelect.value = currentSort;
+    }
+    
     if (searchInput) {
         let searchTimeout;
         searchInput.addEventListener('input', (e) => {
@@ -277,11 +282,16 @@ function initProjectFilters() {
         });
     }
     
+    // Apply initial filter and sort
+    filterProjects(currentFilter, currentSearch, currentSort);
+    
     function filterProjects(filter, search, sort) {
-        const cards = document.querySelectorAll('.project-card');
-        let visibleCount = 0;
+        const cards = Array.from(document.querySelectorAll('.project-card'));
+        const container = document.getElementById('projectsContainer');
+        if (!container) return;
         
-        cards.forEach(card => {
+        // First, filter the cards
+        const visibleCards = cards.filter(card => {
             let show = true;
             
             if (filter === 'featured') {
@@ -295,19 +305,52 @@ function initProjectFilters() {
                 show = card.dataset.search.includes(search);
             }
             
-            if (show) {
-                card.style.display = '';
-                visibleCount++;
-            } else {
-                card.style.display = 'none';
+            return show;
+        });
+        
+        // Then, sort the visible cards
+        visibleCards.sort((a, b) => {
+            if (sort === 'featured') {
+                const aFeatured = a.dataset.featured === 'true';
+                const bFeatured = b.dataset.featured === 'true';
+                if (aFeatured && !bFeatured) return -1;
+                if (!aFeatured && bFeatured) return 1;
+                // If both featured or both not, sort by year (newest first)
+                const yearA = a.dataset.year || '0';
+                const yearB = b.dataset.year || '0';
+                return yearB.localeCompare(yearA);
+            } else if (sort === 'newest') {
+                const yearA = a.dataset.year || '0';
+                const yearB = b.dataset.year || '0';
+                return yearB.localeCompare(yearA);
+            } else if (sort === 'oldest') {
+                const yearA = a.dataset.year || '0';
+                const yearB = b.dataset.year || '0';
+                return yearA.localeCompare(yearB);
+            } else if (sort === 'alphabetical') {
+                const titleA = a.querySelector('.project-title')?.textContent || '';
+                const titleB = b.querySelector('.project-title')?.textContent || '';
+                return titleA.localeCompare(titleB);
             }
+            return 0;
+        });
+        
+        // Hide all cards first
+        cards.forEach(card => {
+            card.style.display = 'none';
+        });
+        
+        // Show and reorder visible cards
+        visibleCards.forEach(card => {
+            card.style.display = '';
+            container.appendChild(card);
         });
         
         if (noProjectsMessage) {
-            noProjectsMessage.style.display = visibleCount === 0 ? 'block' : 'none';
+            noProjectsMessage.style.display = visibleCards.length === 0 ? 'block' : 'none';
         }
         
-        updateProjectCount(visibleCount);
+        updateProjectCount(visibleCards.length);
     }
 }
 
@@ -639,15 +682,28 @@ function renderContactInfo() {
                 <span class="contact-hint">Visit profile →</span>
             </div>
         </a>
-        <div class="contact-item contact-static">
+        ${contact.cvPath ? `
+        <a href="${contact.cvPath}" download class="contact-item contact-link" title="Download my CV/Resume">
+            <div class="contact-icon-wrapper">
+                <div class="contact-icon">📄</div>
+            </div>
+            <div class="contact-details">
+                <h3>Download CV</h3>
+                <p>Get my resume</p>
+                <span class="contact-hint">Download PDF →</span>
+            </div>
+        </a>
+        ` : ''}
+        <a href="${contact.locationLink}" target="_blank" rel="noopener noreferrer" class="contact-item contact-link" title="View location on Google Maps">
             <div class="contact-icon-wrapper">
                 <div class="contact-icon">📍</div>
             </div>
             <div class="contact-details">
                 <h3>Location</h3>
                 <p>${contact.location}</p>
+                <span class="contact-hint">View on map →</span>
             </div>
-        </div>
+        </a>
     `;
 }
 
@@ -683,6 +739,13 @@ function updatePersonalInfo() {
     if (profileImage && info.profileImage) {
         profileImage.src = info.profileImage;
         profileImage.alt = `${info.name} - Profile Picture`;
+    }
+    
+    // Initialize CV download link
+    const downloadCVBtn = document.getElementById('downloadCV');
+    if (downloadCVBtn && portfolioData.contact.cvPath) {
+        downloadCVBtn.href = portfolioData.contact.cvPath;
+        downloadCVBtn.download = portfolioData.contact.cvPath.split('/').pop() || 'resume.pdf';
     }
 }
 
@@ -1012,13 +1075,28 @@ function initInteractivity() {
     
     createScrollIndicator();
     ScrollManager.init();
+    createBackToTopButton();
 
+    // EmailJS Configuration
+    // TODO: Replace these with your EmailJS credentials
+    // Get them from: https://www.emailjs.com/
+    const EMAILJS_CONFIG = {
+        serviceId: 'YOUR_SERVICE_ID',      // Your EmailJS service ID
+        templateId: 'YOUR_TEMPLATE_ID',    // Your EmailJS template ID
+        publicKey: 'YOUR_PUBLIC_KEY'       // Your EmailJS public key
+    };
+    
+    // Initialize EmailJS
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init(EMAILJS_CONFIG.publicKey);
+    }
+    
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
         const sendButton = contactForm.querySelector('.btn-send-message');
         const formMessage = document.getElementById('formMessage');
         
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const name = document.getElementById('name').value.trim();
@@ -1046,26 +1124,61 @@ function initInteractivity() {
                 sendButton.disabled = true;
             }
             
-            setTimeout(() => {
-                showFormMessage(`Thank you, ${name}! Your message has been received. I'll get back to you soon at ${email}.`, 'success');
-                
-                if (formMessage) {
-                    formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
-                
-                contactForm.reset();
-                
-                if (sendButton) {
-                    sendButton.classList.remove('loading');
-                    sendButton.disabled = false;
-                }
-                
-                setTimeout(() => {
-                    if (formMessage) {
-                        formMessage.classList.remove('show');
+            // Check if EmailJS is configured
+            const isEmailJSConfigured = EMAILJS_CONFIG.serviceId !== 'YOUR_SERVICE_ID' && 
+                                       EMAILJS_CONFIG.templateId !== 'YOUR_TEMPLATE_ID' &&
+                                       EMAILJS_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY';
+            
+            if (isEmailJSConfigured && typeof emailjs !== 'undefined') {
+                // Send email using EmailJS
+                try {
+                    await emailjs.send(
+                        EMAILJS_CONFIG.serviceId,
+                        EMAILJS_CONFIG.templateId,
+                        {
+                            from_name: name,
+                            from_email: email,
+                            subject: subject,
+                            message: message,
+                            to_email: portfolioData.contact.email
+                        }
+                    );
+                    
+                    showFormMessage(`Thank you, ${name}! Your message has been sent successfully. I'll get back to you soon at ${email}.`, 'success');
+                    contactForm.reset();
+                } catch (error) {
+                    console.error('EmailJS Error:', error);
+                    showFormMessage('Sorry, there was an error sending your message. Please try again later or contact me directly at ' + portfolioData.contact.email, 'error');
+                } finally {
+                    if (sendButton) {
+                        sendButton.classList.remove('loading');
+                        sendButton.disabled = false;
                     }
-                }, 5000);
-            }, 1500);
+                }
+            } else {
+                // Fallback: Show success message (form won't actually send email)
+                // This allows the form to work while EmailJS is being set up
+                setTimeout(() => {
+                    showFormMessage(`Thank you, ${name}! Your message has been received. I'll get back to you soon at ${email}.`, 'success');
+                    
+                    if (formMessage) {
+                        formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                    
+                    contactForm.reset();
+                    
+                    if (sendButton) {
+                        sendButton.classList.remove('loading');
+                        sendButton.disabled = false;
+                    }
+                    
+                    setTimeout(() => {
+                        if (formMessage) {
+                            formMessage.classList.remove('show');
+                        }
+                    }, 5000);
+                }, 1500);
+            }
         });
         
         function showFormMessage(text, type) {
@@ -1419,6 +1532,38 @@ function createGradientOverlay() {
         overlay.classList.add('fade-out');
         setTimeout(() => overlay.remove(), 2000);
     }, 1500);
+}
+
+function createBackToTopButton() {
+    const button = document.createElement('button');
+    button.className = 'back-to-top';
+    button.setAttribute('aria-label', 'Back to top');
+    button.innerHTML = '<span class="back-to-top-icon">↑</span>';
+    button.style.display = 'none';
+    document.body.appendChild(button);
+    
+    // Show/hide button based on scroll position
+    const toggleButton = () => {
+        if (window.pageYOffset > 300) {
+            button.style.display = 'flex';
+            button.classList.add('visible');
+        } else {
+            button.style.display = 'none';
+            button.classList.remove('visible');
+        }
+    };
+    
+    // Scroll to top on click
+    button.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    // Show/hide on scroll
+    window.addEventListener('scroll', toggleButton, { passive: true });
+    toggleButton(); // Initial check
 }
 
 if (document.readyState === 'loading') {

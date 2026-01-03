@@ -84,8 +84,8 @@ const portfolioData = {
             videoDemo: "",
             caseStudy: "",
             features: ["Book Cataloging", "Member Management", "Loan Tracking", "Search & Filter"],
-            githubLink: "#",
-            link: "#",
+            githubLink: "", // Private project - no public repository
+            link: "",
             linkText: "View Demo"
         },
         {
@@ -102,8 +102,8 @@ const portfolioData = {
             videoDemo: "",
             caseStudy: "",
             features: ["Responsive Design", "Smooth Animations", "Interactive Elements", "Modern UI/UX", "Dynamic Content Loading", "Project Showcase"],
-            githubLink: "#",
-            link: "#",
+            githubLink: "https://github.com/nerick2003", // Portfolio repository - update with actual repo if available
+            link: "",
             linkText: "View Live"
         },
         {
@@ -212,9 +212,11 @@ const portfolioData = {
 
     contact: {
         email: "macapayag.nerick6@gmail.com",
-        linkedin: "linkedin.com/in/yourprofile",
+        linkedin: "linkedin.com/in/nerick-macapayag", // TODO: Update with your actual LinkedIn profile URL
         github: "github.com/nerick2003",
         facebook: "facebook.com/nerick69",
-        location: "Villanueva, Misamis Oriental, Mindanao, Philippines"
+        location: "Villanueva, Misamis Oriental, Mindanao, Philippines",
+        locationLink: "https://maps.app.goo.gl/y45QA5MWhYUrD5zm6",
+        cvPath: "resume/Nerick_Resume.pdf" // Path to your CV/Resume file (PDF recommended)
     }
 };
