@@ -13,22 +13,22 @@ const portfolioData = {
         {
             category: "Programming Languages",
             icon: "💻",
-            items: ["Java", "Python", "JavaScript", "C++", "HTML/CSS"]
+            items: ["Java", "Python", "JavaScript", "C++", "PHP", "HTML/CSS"]
         },
         {
             category: "Web Development",
             icon: "🌐",
-            items: ["HTML5", "CSS3", "JavaScript", "React", "Node.js", "Bootstrap"]
+            items: ["HTML5", "CSS3", "JavaScript", "React", "Angular", "Vue.js", "Node.js", "Bootstrap", "Tailwind CSS"]
         },
         {
             category: "Database",
             icon: "🗄️",
-            items: ["MySQL", "SQLite", "MongoDB", "Database Design"]
+            items: ["MySQL", "SQLite", "MongoDB", "Firebase", "Supabase", "Database Design"]
         },
         {
             category: "Tools & Technologies",
             icon: "🛠️",
-            items: ["Git & GitHub", "VS Code", "Postman", "Figma", "Linux"]
+            items: ["Git & GitHub", "VS Code", "Postman", "Figma", "Linux", "Firebase", "Supabase"]
         },
         {
             category: "Software Engineering",

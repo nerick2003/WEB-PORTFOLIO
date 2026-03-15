@@ -1,3 +1,43 @@
+const SKILL_ICON_MAP = {
+    // Web / Frontend
+    'HTML5': 'devicon-html5-plain colored',
+    'HTML': 'devicon-html5-plain colored',
+    'CSS3': 'devicon-css3-plain colored',
+    'CSS': 'devicon-css3-plain colored',
+    'JavaScript': 'devicon-javascript-plain colored',
+    'React': 'devicon-react-original colored',
+    'Node.js': 'devicon-nodejs-plain colored',
+    'Bootstrap': 'devicon-bootstrap-plain colored',
+    'Angular': 'devicon-angular-plain colored',
+    'Tailwind': 'devicon-tailwindcss-plain colored',
+    'Tailwind CSS': 'devicon-tailwindcss-plain colored',
+    'Vue': 'devicon-vuejs-plain colored',
+    'Vue.js': 'devicon-vuejs-plain colored',
+
+    // Programming Languages
+    'Java': 'devicon-java-plain colored',
+    'Python': 'devicon-python-plain colored',
+    'C++': 'devicon-cplusplus-plain colored',
+    'C': 'devicon-c-plain colored',
+    'PHP': 'devicon-php-plain colored',
+
+    // Databases
+    'MySQL': 'devicon-mysql-plain colored',
+    'SQLite': 'devicon-sqlite-plain colored',
+    'MongoDB': 'devicon-mongodb-plain colored',
+
+    // Tools & Platforms
+    'Git & GitHub': 'devicon-github-original colored',
+    'Git': 'devicon-git-plain colored',
+    'GitHub': 'devicon-github-original colored',
+    'VS Code': 'devicon-vscode-plain colored',
+    'Linux': 'devicon-linux-plain colored',
+    'Figma': 'devicon-figma-plain colored',
+    'Postman': 'devicon-postman-plain colored',
+    'Firebase': 'devicon-firebase-plain colored',
+    'Supabase': 'devicon-supabase-plain colored'
+};
+
 async function loadComponent(path) {
     try {
         const response = await fetch(path);
@@ -28,12 +68,15 @@ function renderSkills() {
                 <div class="accordion-content">
                     <div class="accordion-body">
                         <div class="skill-items">
-                            ${category.items.map(item => `
+                            ${category.items.map(item => {
+                                const iconClass = SKILL_ICON_MAP[item];
+                                return `
                                 <div class="skill-item">
+                                    ${iconClass ? `<i class="skill-icon ${iconClass}" aria-hidden="true"></i>` : ''}
                                     <span class="skill-name">${item}</span>
                                     <div class="skill-badge"></div>
-                                </div>
-                            `).join('')}
+                                </div>`;
+                            }).join('')}
                         </div>
                     </div>
                 </div>
@@ -732,7 +775,7 @@ function updatePersonalInfo() {
     
     const brandText = document.querySelector('.brand-text');
     if (brandText) {
-        brandText.textContent = `${info.name}'s Portfolio`;
+        brandText.textContent = '';
     }
     
     const profileImage = document.getElementById('heroProfileImage');

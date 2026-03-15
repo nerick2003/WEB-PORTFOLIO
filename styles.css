@@ -1202,6 +1202,18 @@ section:last-of-type {
     cursor: pointer;
 }
 
+.skill-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.skill-item:hover .skill-icon {
+    filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.5));
+}
+
 .skill-item::before {
     content: '';
     position: absolute;
