@@ -1,0 +1,48 @@
+<section id="projects" class="projects">
+    <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <p class="section-subtitle">Some of my recent work and academic projects</p>
+        
+        <div class="projects-controls">
+            <div class="projects-search">
+                <input type="text" id="projectSearch" class="search-input" placeholder="Search projects...">
+                <span class="search-icon">🔍</span>
+            </div>
+            <div class="projects-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="featured">⭐ Featured</button>
+                <button class="filter-btn" data-filter="completed">✅ Completed</button>
+                <button class="filter-btn" data-filter="in-progress">🚧 In Progress</button>
+            </div>
+            <div class="projects-sort">
+                <select id="projectSort" class="sort-select">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="featured">Featured First</option>
+                    <option value="alphabetical">A-Z</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="projects-stats">
+            <span id="projectCount" class="project-count">0 projects</span>
+        </div>
+        
+        <div class="projects-grid" id="projectsContainer">
+        </div>
+        
+        <div id="noProjectsMessage" class="no-projects-message" style="display: none;">
+            <p>No projects found matching your criteria.</p>
+        </div>
+    </div>
+</section>
+
+<div id="projectModal" class="project-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+        <button class="modal-close" aria-label="Close modal">×</button>
+        <div class="modal-body" id="modalBody">
+        </div>
+    </div>
+</div>
+
